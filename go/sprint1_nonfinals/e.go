@@ -8,8 +8,41 @@ import (
 	"strings"
 )
 
+// Чтобы подготовиться к семинару, Гоше надо прочитать статью по эффективному менеджменту.
+//Так как Гоша хочет спланировать день заранее, ему необходимо оценить сложность статьи.
+//
+//Он придумал такой метод оценки: берётся случайное предложение из текста и в нём ищется
+//самое длинное слово. Его длина и будет условной сложностью статьи.
+//
+//Помогите Гоше справиться с этой задачей.
 func getLongestWord(line string) string {
-	// Ваше решение
+	longestWordLength := 0
+	longestWordBeginIndex := 0
+
+	currentWordBeginIndex := 0
+	currentWordLength := 0
+	for i, symbol := range line {
+		if i == len(line)-1 {
+			if currentWordLength+1 > longestWordLength {
+				longestWordLength = currentWordLength + 1
+				longestWordBeginIndex = currentWordBeginIndex
+			}
+			continue
+		}
+		if string(symbol) == " " {
+			if currentWordLength > longestWordLength {
+				longestWordLength = currentWordLength
+				longestWordBeginIndex = currentWordBeginIndex
+			}
+			currentWordLength = 0
+			currentWordBeginIndex = i + 1
+		} else {
+			currentWordLength++
+		}
+
+	}
+
+	return line[longestWordBeginIndex : longestWordBeginIndex+longestWordLength]
 }
 
 func main() {

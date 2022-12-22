@@ -4,12 +4,32 @@ import (
 	"bufio"
 	"fmt"
 	"os"
+	"sort"
 	"strconv"
 	"strings"
 )
 
+// Дана матрица. Нужно написать функцию, которая для элемента возвращает всех его соседей.
+// Соседним считается элемент, находящийся от текущего на одну ячейку влево, вправо, вверх или вниз.
+// Диагональные элементы соседними не считаются.
+//
+// Например, в матрице A соседними элементами для (0, 0) будут 2 и 0. А для (2, 1) –— 1, 2, 7, 7.
 func getNeighbours(matrix [][]int, row int, col int) []int {
-	// Ваше решение
+	result := make([]int, 0)
+	if row-1 >= 0 {
+		result = append(result, matrix[row-1][col])
+	}
+	if row+1 < len(matrix) {
+		result = append(result, matrix[row+1][col])
+	}
+	if col-1 >= 0 {
+		result = append(result, matrix[row][col-1])
+	}
+	if col+1 < len(matrix[row]) {
+		result = append(result, matrix[row][col+1])
+	}
+	sort.Ints(result)
+	return result
 }
 
 func main() {

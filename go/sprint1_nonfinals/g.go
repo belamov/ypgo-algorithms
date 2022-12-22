@@ -6,8 +6,37 @@ import (
 	"strconv"
 )
 
+// Вася реализовал функцию, которая переводит целое число из десятичной системы в двоичную.
+//Но, кажется, она получилась не очень оптимальной.
+//
+//Попробуйте написать более эффективную программу.
+//
+//Не используйте встроенные средства языка по переводу чисел в бинарное представление.
 func getBinaryNumber(n int) []int {
-	// Ваше решение
+	if n == 0 {
+		return []int{0}
+	}
+
+	result := make([]int, 0)
+
+	for n > 0 {
+		result = append(result, n%2)
+		n = n / 2
+	}
+
+	reverse(result)
+
+	return result
+}
+
+func reverse(nums []int) {
+	i := 0
+	j := len(nums) - 1
+	for i < j {
+		nums[i], nums[j] = nums[j], nums[i]
+		i++
+		j--
+	}
 }
 
 func main() {

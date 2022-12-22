@@ -6,10 +6,34 @@ import (
 	"os"
 	"strconv"
 	"strings"
+	"unicode"
 )
 
+// Помогите Васе понять, будет ли фраза палиндромом.
+//Учитываются только буквы и цифры, заглавные и строчные буквы считаются одинаковыми.
+//
+//Решение должно работать за O(N), где N — длина строки на входе.
 func isPalindrome(line string) bool {
-	// Ваше решение
+	start := 0
+	end := len(line) - 1
+
+	for start < end {
+		if !unicode.IsLetter(rune(line[start])) {
+			start++
+			continue
+		}
+		if !unicode.IsLetter(rune(line[end])) {
+			end--
+			continue
+		}
+
+		if !strings.EqualFold(string(line[start]), string(line[end])) {
+			return false
+		}
+		start++
+		end--
+	}
+	return true
 }
 
 func main() {
