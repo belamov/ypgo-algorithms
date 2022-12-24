@@ -7,8 +7,47 @@ import (
 	"strconv"
 )
 
+// Тимофей записал два числа в двоичной системе счисления и попросил Гошу вывести их сумму, также в двоичной системе.
+//Встроенную в язык программирования возможность сложения двоичных чисел применять нельзя.
+//Помогите Гоше решить задачу.
+//
+//Решение должно работать за O(N), где N –— количество разрядов максимального числа на входе.
 func getSum(firstNumber string, secondNumber string) string {
-	// Ваше решение
+	firstLen := len(firstNumber) - 1
+	secondLen := len(secondNumber) - 1
+
+	i := 0
+
+	result := ""
+	carry := 0
+	for i <= firstLen || i <= secondLen {
+		firstDigit := 0
+		secondDigit := 0
+
+		firstDigitIndex := firstLen - i
+		if firstDigitIndex >= 0 {
+			firstDigit = int(firstNumber[firstDigitIndex] - 48)
+		}
+
+		secondDigitIndex := secondLen - i
+		if secondDigitIndex >= 0 {
+			secondDigit = int(secondNumber[secondDigitIndex] - 48)
+		}
+
+		sum := firstDigit + secondDigit + carry
+
+		result = strconv.Itoa(sum%2) + result
+
+		carry = sum / 2
+
+		i++
+	}
+
+	if carry > 0 {
+		result = "1" + result
+	}
+
+	return result
 }
 
 func main() {

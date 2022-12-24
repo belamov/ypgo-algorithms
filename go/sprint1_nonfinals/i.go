@@ -7,8 +7,18 @@ import (
 	"strconv"
 )
 
-func isPowerOfFour(number int) bool {
-	// Ваше решение
+// Напишите программу, которая определяет, будет ли положительное целое число степенью четвёрки.
+//
+//Подсказка: степенью четвёрки будут все числа вида 4^n, где n – целое неотрицательное число.
+func isPowerOfFour(n int) bool {
+	if n == 0 {
+		return false
+	}
+
+	isOdd := (n & (n - 1)) == 0
+	is1BitInEvenPosition := (n & 0xAAAAAAAA) == 0
+
+	return isOdd && is1BitInEvenPosition
 }
 
 func main() {

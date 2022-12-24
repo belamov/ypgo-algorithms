@@ -7,12 +7,53 @@ import (
 	"strings"
 )
 
+//Вася просил Аллу помочь решить задачу. На этот раз по информатике.
+//
+//Для неотрицательного целого числа X списочная форма –— это массив его цифр слева направо.
+//К примеру, для 1231 списочная форма будет [1,2,3,1]. На вход подается количество цифр числа Х, списочная форма
+//неотрицательного числа Х и неотрицательное число K. Число К не превосходят 10000. Длина числа Х не превосходит 1000.
+//
+//Нужно вернуть списочную форму числа X + K.
 func getSum(bigNumber []int, smallNumber int) []int {
-	// Ваше решение
+	result := make([]int, 0)
+
+	carry := 0
+	firstDigit := 0
+	secondDigit := 0
+
+	secondDigits := make([]int, 0)
+	for smallNumber > 0 {
+		digit := smallNumber % 10
+		secondDigits = append([]int{digit}, secondDigits...)
+		smallNumber = smallNumber / 10
+	}
+	for i := 0; i < len(bigNumber) || i < len(secondDigits); i++ {
+		if i < len(bigNumber) {
+			firstDigit = bigNumber[len(bigNumber)-1-i]
+		} else {
+			firstDigit = 0
+		}
+
+		if i < len(secondDigits) {
+			secondDigit = secondDigits[len(secondDigits)-1-i]
+		} else {
+			secondDigit = 0
+		}
+
+		sum := firstDigit + secondDigit + carry
+		carry = sum / 10
+		result = append([]int{sum % 10}, result...)
+	}
+
+	if carry > 0 {
+		result = append([]int{carry}, result...)
+	}
+	return result
 }
 
 func main() {
 	scanner := makeScanner()
+	readLine(scanner)
 	bigNumer := readArray(scanner)
 	smallNumber := readInt(scanner)
 	printArray(getSum(bigNumer, smallNumber))
