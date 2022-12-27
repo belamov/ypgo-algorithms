@@ -11,7 +11,7 @@ import (
 
 //###############################################################################################
 //
-// айди успешной посылки 80042418: https://contest.yandex.ru/contest/22450/run-report/80042418/
+// айди успешной посылки 80077842: https://contest.yandex.ru/contest/22450/run-report/80077842/
 //
 //###############################################################################################
 
@@ -29,18 +29,10 @@ func getMaximumPoints(game []int, availableEach int) int {
 	const playersCount = 2
 
 	// составим мапу, формата раунд - количество клавиш, необходимое нажать в раунде
-	rounds := map[int]int{}
-
-	// заполним ее 0, чтобы понимать далее, что этого раунда не было
-	for t := 1; t <= 9; t++ {
-		rounds[t] = 0
-	}
+	rounds := make([]int, 10)
 
 	for _, t := range game {
-		//0 обозначаются точки, пропускаем их
-		if t != 0 {
-			rounds[t]++
-		}
+		rounds[t]++
 	}
 
 	for _, required := range rounds {
@@ -76,9 +68,7 @@ func readGame(scanner *bufio.Scanner) []int {
 	for i := 0; i < 4; i++ {
 		line := readLine(scanner)
 		for j := 0; j < 4; j++ {
-			if string(line[j]) == "." {
-				game = append(game, 0)
-			} else {
+			if string(line[j]) != "." {
 				t, _ := strconv.Atoi(string(line[j]))
 				game = append(game, t)
 			}
